@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSON 표기법</title>
+</head>
+<script>
+//숫자, 문자, 논리값
+/*var arr=[1,2,3];
+var arr2=["사과","딸기","바나나"];
+var arr3=[true,false,false];
+var b1=new Bullet();
+var b2=new Bullet();
+var b3=new Bullet();
+var arr4=[b1,b2,b3];
+*/
+
+//프로그램 로직에 사용되는 객체와는 목적이 다르기 때문에, 오직 데이터를
+//담는 용도로만 사용된다.
+
+var data="";
+
+data=data+"{";
+data=data+"\"제품수\": 3,";
+data=data+"\"원산지\": \"한국\",";
+
+data=data+"\"제품\": [";
+data=data+"{";
+data=data+"\"제품명\": \"세탁기\",";
+data=data+"\"제조사\": \"삼성\",";
+data=data+"\"가격\": 50,";
+data=data+"\"절전기능\": true";
+data=data+"}, ";
+data=data+"{";
+data=data+"\"제품명\": \"냉장고\",";
+data=data+"\"제조사\": \"LG\",";
+data=data+"\"가격\": 200,";
+data=data+"\"절전기능\": false";
+data=data+"}, ";
+data=data+"{";
+data=data+"\"제품명\": \"TV\",";
+data=data+"\"제조사\": \"삼성\",";
+data=data+"\"가격\": 400,";
+data=data+"\"절전기능\": true";
+data=data+"}";
+data=data+"]";
+data=data+"}";
+
+
+//document.write(data);
+
+var obj=JSON.parse(data); // 문자열의 불과한 데이터를 json객체화 시킴!
+
+//스트링 데이터를 대상으로 json객체화 시키면, 마치 객체처럼 취급받기 때문에
+//객체 지향언어의 코드 방식으로 속성세 접근하는 개발방법이 가능하다..
+//객체 지향 개발자에게 친숙하기 때문에, xml보다 사용이 직관적이다.
+document.write(obj.원산지);
+
+for(var i=0;i<obj.제품.length;i++)
+{
+	document.write(obj.제품[i].제품명+"<br>");
+}
+</script>
+<body>
+
+</body>
+</html>
