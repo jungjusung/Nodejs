@@ -5,12 +5,20 @@ express모듈이란? 웹서버 구축에 필요한 기능들을 위해 http모�
 추가시켜놓은 외부 모듈..(http의 업그레이드 모듈 but 2모듈은 같이 사용한다..)
 */
 
+//ejs모듈을 이용하면, html문서 내에서 반복문 등의 기초적인 자바스크립트프로그래밍 
+//문법이 적용될 수 있다.
+
 var http=require("http"); // 내부
 var express=require("express"); // 외부
 var fs=require("fs"); // 내부 
 var mysql=require("mysql"); // 외부
 //express 모듈로 부터 application 객체를 반환 생성하자!!
 var bodyParser=require("body-parser"); // 외부
+var ejs=require("ejs"); // 외부
+
+
+
+
 var app=express();
 app.use(bodyParser.json()); // json 지원
 app.use(bodyParser.urlencoded({extended:true}));
@@ -32,8 +40,16 @@ client.query("use iot"); // 사용할 db선택!
 app.route("/list").get(function(request,response){
 	//list.html 페이지를 읽어들인 결과를 page변수에 담음
 	var page=fs.readFileSync("./list.html","utf8");
-	response.writeHead(200,{"Content-Type":"text/html; charset=utf8"});
-	response.end(page);
+	
+	//응답전에 이미 데이터베이스 레코드들을 가져왔어야 한다..
+	client.query("select * from student",function(error,records,field){
+		if(!error){
+			response.writeHead(200,{"Content-Type":"text/html; charset=utf8"});
+			response.end(ejs.render(page,{dataList:records}));
+		}else{
+			console.log("망했어요");
+		}
+	});
 });
 
 
