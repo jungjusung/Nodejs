@@ -19,6 +19,7 @@ var ejs=require("ejs"); // 외부
 
 
 
+
 var app=express();
 app.use(bodyParser.json()); // json 지원
 app.use(bodyParser.urlencoded({extended:true}));
@@ -98,13 +99,31 @@ app.route("/regist").post(function(request,response){
 	});
 });
 
+//상세 보기 요청이 들어오면...
+
+app.route("/detail/:id").get(function(request,response){
+	//데이터베이스 연동이 되어있어야 한다.
+	//유저가 선택한 아이디를 get방식으로 넘겨 받았어야 한다.
+	//console.log(request.params.id);
+	var page=fs.readFileSync("./detail.html","utf8");
+	client.query("select * from student where id='"+request.params.id+"'",function(error,records){
+		if(!error)
+		{
+			response.writeHead(200,{"Content-Type":"text/html; charset=utf8"});
+			response.end(ejs.render(page,{obj:records}));
+		}
+		else{
+			console.log("일치하는 데이터를 발견할 수 없네요");
+		}
+		
+	});
+});
+
+
 var server=http.createServer(app);
 server.listen(8383,function(){
 	console.log("Server is running at 8383");
 });
-
-
-
 
 
 

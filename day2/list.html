@@ -14,12 +14,17 @@
 		<td>이름</td>
 	</tr>
 	<%for(var i=0;i<dataList.length;i++){%>
-	<tr>
-		<td><%=dataList[i].id%></td>
+	<tr onMouseOver="this.style.background='yellow'" onMouseOut="this.style.background=''">
+		<td><a href="/detail/<%=dataList[i].id%>"><%=dataList[i].id%></a></td>
 		<td><%=dataList[i].pwd%></td>
 		<td><%=dataList[i].name%></td>
 	</tr>
 	<%}%>
+	<tr>
+		<td colspan="3" align="right">
+			<a href="/regist_form">회원등록</a>
+		</td>
+	</tr>
 
 
 </table>
